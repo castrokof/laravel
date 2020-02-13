@@ -15,10 +15,11 @@ class CreatePermisoTable extends Migration
     {
         Schema::create('permiso', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre',100);
-            $table->string('slug',100);
+            $table->string('nombre',100)->unique();
+            $table->string('slug',100)->unique();
             $table->timestamps();
         });
+        
     }
 
     /**
