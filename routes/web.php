@@ -10,6 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('permiso/{nombre}/{slug}', 'PermisoController@index');
+Route::get('/', 'InicioController@index');
 
 
