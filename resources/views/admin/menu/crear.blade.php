@@ -6,6 +6,8 @@
 @section('contenido')
 <div class="row">
 <div class="col-lg-12">    
+  @include('includes.form-error')
+  @include('includes.form-mensaje')
 <div class="card card-warning">
     <div class="card-header">
       <h3 class="card-title">Crear Menús</h3>
