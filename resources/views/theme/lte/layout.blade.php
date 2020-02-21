@@ -13,10 +13,13 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
+ 
+  @yield("styles")
+ 
   <!-- Theme Custom -->
   <link rel="stylesheet" href="{{asset("assets/css/custom.css")}}">
 
-  @yield("styles")
+
   
  
   <!-- Google Font: Source Sans Pro -->
@@ -53,6 +56,13 @@
 <script src="{{asset("assets/$theme/dist/js/adminlte.min.js")}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset("assets/$theme/dist/js/demo.js")}}"></script>
+
+@yield("scriptsPlugins")
+<!-- Jq Validate -->
+<script src="{{asset("assets/js/jquery-validation/jquery.validate.min.js")}}"></script>
+<script src="{{asset("assets/js/jquery-validation/localization/messages_es.min.js")}}"></script>
+<script src="{{asset("assets/js/funciones.js")}}"></script>
+<script src="{{asset("assets/js/scripts.js")}}"></script>
 @yield("scripts")
 
 

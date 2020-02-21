@@ -3,32 +3,42 @@
   Menus 
 @endsection
 
+@section("styles")
+<link href="{{asset("assets/js/jquery-nestable/jquery.nestable.css")}}" rel="stylesheet" type="text/css"/>       
+@endsection
+
+@section("scriptsPlugins")
+<script src="{{asset("assets/js/jquery-nestable/jquery.nestable.js")}}" type="text/javascript"></script>       
+@endsection
+
+@section("scripts")
+<script src="{{asset("assets/pages/scripts/admin/menu/index.js")}}" type="text/javascript"></script>       
+@endsection
+
 @section('contenido')
 <div class="row">
-<div class="col-lg-12">    
+<div class="col-lg-12">
+  @include('includes.form-mensaje')    
 <div class="card card-primary">
     <div class="card-header">
-      <h3 class="card-title">Menus</h3>
+      <h3 class="card-title">Menús</h3>
     </div>
     <!-- /.card-header -->
-    <div class="card-body table-responsive p-0">
-      <table class="table table-bordered table-striped table-hover text-nowrap">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Slug</th>
-                    <th></th>
-
-                </tr>
-            </thead>
-            <tbody>
-                    
-            </tbody>
-      </table>
-    </div>
+    <div class="card-body">
+      @csrf
+      <div class="dd" id="nestable">
+            <ol class="dd-list">
+              @foreach ($menus as $key =>$item)
+                  @if ($item["menu_id"]!=0)
+                    @break
+                  @endif
+                  @include("admin.menu.menu-item",["item"=>$item])
+              @endforeach
+            </ol>  
+      </div>
     
   </div>
+</div>
 </div>
 </div>
 @endsection
