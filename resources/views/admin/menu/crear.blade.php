@@ -15,6 +15,9 @@
 <div class="card card-warning">
     <div class="card-header">
       <h3 class="card-title">Crear Menús</h3>
+      <div class="card-tools pull-right">
+        <a href="{{route('menu')}}" class="btn btn-info btn-sm">Listar menú</a>
+        </div>  
     </div>
   <form action="{{route('guardar_menu')}}" id="form-general" class="form-horizontal" method="POST">
     @csrf

@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('.alert[data-auto-dismiss]').each(function(index, element){
         const $element = $(element),
-            timeout = $element.data('auto-dismiss') || 5000;
+            timeout = $element.data('auto-dismiss') || 4000;
         setTimeout(function(){
             $element.alert('close');
             
@@ -16,4 +16,7 @@ $(document).ready(function(){
         container: 'body'
 
     });
+
+    //$('ul.#sidebar-menu').find('li.active').parents('li').addClass('active');
+
 });

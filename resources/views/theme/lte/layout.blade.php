@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
- 
+  <!-- Theme Toastr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   @yield("styles")
  
   <!-- Theme Custom -->
@@ -58,6 +59,10 @@
 <script src="{{asset("assets/$theme/dist/js/demo.js")}}"></script>
 
 @yield("scriptsPlugins")
+<!-- Jq Sweet alert cdn -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Jq Toastr cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- Jq Validate -->
 <script src="{{asset("assets/js/jquery-validation/jquery.validate.min.js")}}"></script>
 <script src="{{asset("assets/js/jquery-validation/localization/messages_es.min.js")}}"></script>

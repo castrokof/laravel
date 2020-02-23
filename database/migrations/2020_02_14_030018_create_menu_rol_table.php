@@ -17,7 +17,7 @@ class CreateMenuRolTable extends Migration
             $table->unsignedBigInteger('rol_id');
             $table->foreign('rol_id', 'fk_menurol_rol')->references('id')->on('rol')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('menu_id');
-            $table->foreign('menu_id', 'fk_menurol_permiso')->references('id')->on('menu')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('menu_id', 'fk_menurol_permiso')->references('id')->on('menu')->onDelete('cascade')->onUpdate('restrict');
             
         });
     }

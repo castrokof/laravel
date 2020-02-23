@@ -5,6 +5,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset("assets/pages/scripts/admin/rol/index.js")}}" type="text/javascript"></script>
 <script src="{{asset("assets/pages/scripts/admin/rol/crear.js")}}" type="text/javascript"></script>    
 @endsection
 
@@ -17,13 +18,13 @@
         <div class="card-header with-border">
           <h3 class="card-title">Roles</h3>
           <div class="card-tools pull-right">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg"><i class="fa fa-fw fa-plus-circle"></i> Nuevo Registro</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg"><i class="fa fa-fw fa-plus-circle"></i> Nuevo Rol</button>
             </button>
           </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-      <table class="table table-hover table-bordered text-nowrap">
+      <table id="tabla-data" class="table table-hover table-bordered text-nowrap">
         <thead>
         <tr>
               <th class="width70">Id</th>
@@ -40,7 +41,7 @@
                 <a href="{{url("admin/rol/$rol->id/editar")}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
                   <i class="fa fa-fw fa-pencil-alt"></i>
                 </a>
-                <form action="{{url("admin/rol/$rol->id")}}" class="d-inline form-eliminar" method="POST>
+                <form action="{{url("admin/rol/$rol->id")}}" class="d-inline form-eliminar" method="POST">
                   @csrf @method("delete")
                   <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar registro">
                     <i class="fa fa-fw fa-trash text-danger"></i>
@@ -83,7 +84,7 @@
                               </div>
                                </div>
                               <!-- /.card-footer -->
-                            </form>
+              </form>
                          
             
                

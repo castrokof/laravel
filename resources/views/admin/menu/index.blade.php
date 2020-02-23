@@ -22,6 +22,9 @@
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Menús</h3>
+      <div class="card-tools pull-right">
+      <a href="{{route('crear_menu')}}" class="btn btn-info btn-sm">Crear menú</a>
+      </div>  
     </div>
     <!-- /.card-header -->
     <div class="card-body">
