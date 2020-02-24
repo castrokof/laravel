@@ -4,16 +4,17 @@ namespace App\Models\Seguridad;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Admin\Rol;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
     protected $remember_token = false;
-    protected $guarded = ['id'];
+    //protected $guarded = ['id'];
     protected $fillable = [
         
-        'usuario', 'nombre', 'tipodeusuario', 'email', 'empresa',  'password', 'remember_token'
+        'usuario', 'nombre', 'tipodeusuario', 'email', 'empresa',  'password', 'remember_token', 'estado'
     ];
 
 
@@ -31,7 +32,7 @@ class Usuario extends Authenticatable
 
     public function setSession(){
 
-    $roles1 = $this->roles1()->where('estado', 1)->get()->toArray();
+    $roles1 = $this->roles1()->get()->toArray();
 
         if (count($roles1) == 1) {
             Session::put(
@@ -46,4 +47,12 @@ class Usuario extends Authenticatable
         }
         
     }
+    public function setPasswordAttribute($value)
+    {
+        if ( !empty ($value))
+        {
+            $this->attributes['password'] = Hash::make($value);
+        }
+    }
+
 }
