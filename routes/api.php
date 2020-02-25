@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+return $request->user();
+});
+
+//Route::get('medidores','MedidorController@medidorall');
+//Route::post('medidores','MedidorController@medidorejecutado');
+Route::post('loginMovil','Seguridad\LoginController@loginMovil');

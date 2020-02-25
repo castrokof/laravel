@@ -14,7 +14,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
   <!-- Theme Toastr -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">-->
+  <link rel="stylesheet" href="{{asset("assets/$theme/plugins/toastr/toastr.min.css")}}">
   @yield("styles")
  
   <!-- Theme Custom -->
@@ -62,7 +63,8 @@
 <!-- Jq Sweet alert cdn -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Jq Toastr cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>-->
+<script src="{{asset("assets/$theme/plugins/toastr/toastr.min.js")}}"></script>
 <!-- Jq Validate -->
 <script src="{{asset("assets/js/jquery-validation/jquery.validate.min.js")}}"></script>
 <script src="{{asset("assets/js/jquery-validation/localization/messages_es.min.js")}}"></script>

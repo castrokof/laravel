@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) { error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING); }
+
 Route::get('/', 'Admin\InicioController@index')->name('inicio');
 Route::get('seguridad/login', 'Seguridad\LoginController@index')->name('login');
 Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login_post');
@@ -47,6 +50,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
      Route::post('usuario', 'UsuarioController@guardar')->name('guardar_usuario');
      Route::get('usuario/{id}/editar', 'UsuarioController@editar')->name('editar_usuario');
      Route::put('usuario/{id}', 'UsuarioController@actualizar')->name('actualizar_usuario');
+      /* RUTAS DEL ARCHIVO y ENTRADA */
+     Route::get('archivo', 'ArchivoController@index')->name('archivo');
+     Route::post('guardar', 'EntradaController@guardar')->name('subir_archivo');
+     
      
 });
 

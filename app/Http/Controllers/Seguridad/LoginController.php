@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Seguridad;
-
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    //use Notifiable;
     use AuthenticatesUsers;
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
 
     public function __construct()
     {
@@ -41,4 +42,30 @@ class LoginController extends Controller
     {
         return 'usuario';
     }
+    public function loginMovil(Request $request)
+    {   
+       
+         if(Auth::attempt($request->only('usuario','password'))){
+
+            $user = Auth::user();
+            
+            return Response()->json([
+            'user' => $user
+        ], 200);
+
+
+
+         }else{
+
+
+
+            return response()->json(['error'=> 'Unauthorised'], 401);
+
+         }
+
+        
+
+    }
+
+
 }

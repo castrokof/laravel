@@ -46,6 +46,7 @@ var Manteliviano = function(){
                 positioClass: 'toast-top-right',
                 preventDuplicates: true,
                 timeOut: '5000'
+                
             };
             if (tipo == 'success'){
                 toastr.success(mensaje, titulo);
