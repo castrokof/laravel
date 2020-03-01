@@ -16,7 +16,7 @@ class CreateEntradaTable extends Migration
         Schema::create('entrada', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('zona',45);
-            $table->integer('poliza')->unique();
+            $table->integer('poliza');
             $table->string('direccion',255);
             $table->string('recorrido',255);
             $table->string('medidor',50);
@@ -24,6 +24,7 @@ class CreateEntradaTable extends Migration
             $table->integer('year');
             $table->integer('mes');
             $table->integer('lote');
+            $table->integer('periodo');
             $table->integer('consecutivo');
             $table->integer('consecutivo_int');
             $table->integer('ruta');

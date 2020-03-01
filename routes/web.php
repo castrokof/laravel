@@ -54,10 +54,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
      Route::get('archivo', 'ArchivoController@index')->name('archivo');
      Route::post('guardar', 'EntradaController@guardar')->name('subir_archivo');
      /* RUTAS DE ASIGNACION */
-     Route::get('asignacion', 'OrdenesmtlController@index')->name('asignacion');
-     Route::post('asignacion', 'OrdenesmtlController@actualizar')->name('actualizar_asignacion');
+     Route::get('asignacion', 'OrdenesmtlasignarController@index')->name('asignacion');
+     Route::post('asignacion', 'OrdenesmtlasignarController@actualizar')->name('actualizar_asignacion');
       /* DETALLE DE ORDENES */
-     Route::get('detalleorden', 'OrdenesmtlController@index1')->name('detalle_de_ordenes');
+     Route::get('detalleorden', 'OrdenesmtlasignarController@index1')->name('detalle_de_ordenes');
       
      
 });

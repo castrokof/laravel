@@ -18,8 +18,11 @@ class CreateArchivoTable extends Migration
             $table->string('nombre',100);
             $table->dateTime('fecha');
             $table->integer('registros');
+            $table->integer('periodo');
             $table->string('estado',30);
+            $table->string('zona',45);
             $table->string('usuario',50);
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

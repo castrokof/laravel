@@ -14,7 +14,7 @@ class CreateMarcasTable extends Migration
     public function up()
     {
         Schema::create('marcas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedIncrements('id');
             $table->integer('marca_id');
             $table->string('codigo',50);
             $table->string('descripcion',100);
