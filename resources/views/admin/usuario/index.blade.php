@@ -3,6 +3,10 @@
 @section('titulo')
     Usuarios
 @endsection
+@section("styles")
+<link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>       
+@endsection
+
 
 @section('scripts')
 <script src="{{asset("assets/pages/scripts/admin/usuario/index.js")}}" type="text/javascript"></script>
@@ -24,7 +28,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-      <table id="tabla-data" class="table table-hover table-bordered text-nowrap">
+      <table id="usuarios" class="table table-hover table-bordered text-nowrap">
         <thead>
         <tr>
               <th>Id</th>
@@ -102,7 +106,30 @@
 </div>
 
 
-
 @endsection
 
 
+
+@section("scriptsPlugins")
+<script src="{{asset("assets/$theme/plugins/datatables/jquery.dataTables.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/$theme/plugins/datatables-bs4/js/dataTables.bootstrap4.js")}}" type="text/javascript"></script>
+
+<script>
+ 
+ jQuery(function($) {
+        //initiate dataTables plugin
+
+        var myTable = 
+        $('#usuarios')
+        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+        .DataTable(
+
+          
+
+        );
+
+       });
+  </script>
+   
+
+@endsection

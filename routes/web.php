@@ -13,12 +13,12 @@
 
 if(version_compare(PHP_VERSION, '7.2.0', '>=')) { error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING); }
 
-Route::get('/', 'Admin\InicioController@index')->name('inicio');
+Route::get('/', 'Seguridad\LoginController@index')->name('inicio');
 Route::get('seguridad/login', 'Seguridad\LoginController@index')->name('login');
 Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login_post');
 Route::get('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function () {
-    Route::get('', 'AdminController@index');
+    Route::get('', 'AdminController@index')->name('tablero');
     /* RUTAS DEL MENU */
     Route::get('menu', 'MenuController@index')->name('menu');
     Route::get('menu/crear', 'MenuController@crear')->name('crear_menu');
@@ -53,7 +53,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
       /* RUTAS DEL ARCHIVO y ENTRADA */
      Route::get('archivo', 'ArchivoController@index')->name('archivo');
      Route::post('guardar', 'EntradaController@guardar')->name('subir_archivo');
-     
+     /* RUTAS DE ASIGNACION */
+     Route::get('asignacion', 'OrdenesmtlController@index')->name('asignacion');
+     Route::post('asignacion', 'OrdenesmtlController@actualizar')->name('actualizar_asignacion');
+      /* DETALLE DE ORDENES */
+     Route::get('detalleorden', 'OrdenesmtlController@index1')->name('detalle_de_ordenes');
+      
      
 });
 

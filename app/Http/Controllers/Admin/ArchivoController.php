@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Archivo;
+use App\Http\Requests\ValidacionArchivo;
 
 use Maatwebsite\Excel\Facades\Excel;
 

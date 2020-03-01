@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="{{asset("assets/$theme/plugins/fontawesome-free/css/all.min.css")}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+   <!-- Data tables -->
+  
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
   <!-- Theme Toastr -->
@@ -52,6 +54,8 @@
     </div>
 <!-- jQuery -->
 <script src="{{asset("assets/$theme/plugins/jquery/jquery.min.js")}}"></script>
+<!-- data tables -->
+
 <!-- Bootstrap 4 -->
 <script src="{{asset("assets/$theme/plugins/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
 <!-- AdminLTE App -->

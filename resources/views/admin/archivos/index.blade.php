@@ -4,8 +4,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{asset("assets/pages/scripts/admin/permiso/index.js")}}" type="text/javascript"></script>
-<script src="{{asset("assets/pages/scripts/admin/permiso/crear.js")}}" type="text/javascript"></script>    
+<script src="{{asset("assets/pages/scripts/admin/rol/index.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/pages/scripts/admin/archivo/crear.js")}}" type="text/javascript"></script>    
 @endsection
 
 
@@ -13,7 +13,7 @@
 <div class="row">
 <div class="col-lg-12">
   @include('includes.form-error')
-  @include('includes.form-mensaje')    
+  @include('includes.form-mensaje')  
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Archivos</h3>
@@ -72,12 +72,9 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
           </div>
-        <form action="{{route('subir_archivo')}}" id="form-general" enctype="multipart/form-data" form-horizontal" method="POST">
+        <form action="{{route('subir_archivo')}}" id="form-general" class="form-horizontal" method="POST" enctype="multipart/form-data" >
           @csrf
-          @if(Session::has('message'))
-            <p>{{ Session::get('message')}}</p>
-          @endif
-          <div class="card-body">
+         <div class="card-body">
                             @include('admin.archivos.form')
                         </div>
                         <!-- /.card-body -->

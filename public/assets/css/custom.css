@@ -17,6 +17,11 @@ label.requerido:after{
     display: inline;
 }
 
+.width40{
+    width: 40px !important;
+}
+
+
 .width70{
     width: 70px !important;
 }
@@ -33,4 +38,16 @@ label.requerido:after{
 }
 .pl-50{
     padding-left:50px !important ;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
+  }
+
+/* Tal vez desee envolver un espacio alrededor de su texto de casilla de verificación */
+.checkboxtexto
+{
+  /* Checkbox texto */
+  font-size: 110%;
+  display: inline;
 }
