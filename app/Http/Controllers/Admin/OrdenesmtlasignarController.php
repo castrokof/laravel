@@ -7,47 +7,75 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Ordenesmtl;
 use App\Models\Seguridad\Usuario;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class  OrdenesmtlasignarController extends Controller
 {
     public function index(Request $request)
     {   
-        $Periodo=$request->periodo;
-        $Zona=$request->zona;
-        $Estado=$request->estado;
-        $orden=$request->orden;
-        $ordenf=$request->ordenf;
 
-        
-
-        if(($Periodo != null & $Zona != null & $Estado != null) || ($orden != null & $ordenf != null  )){
-
-            $datas=DB::table('ordenesmtl')
-            ->where([
-            ['periodo','=',$Periodo],
-            ['zona','=',$Zona],
-            ['estado','=',$Estado],
-            ])
-            ->orwhereBetween('ordenesmtl_id', [$orden, $ordenf])    
-            ->select('id','ordenesmtl_id', 'estado', 'usuario', 'poliza','direccion','recorrido',
-                'periodo','zona')
-            ->get();
-            
-            
-            
-            $usuarios=Usuario::orderBy('id')->where('tipodeusuario','movil')->pluck('usuario', 'id');
-            
-            
-            return view('admin.ordenes.index', compact("datas","usuarios"));
+        $fechaAi=now()->toDateString()." 00:00:01";
+        $fechaAf=now()->toDateString()." 23:59:59";
     
-       }else{
+        if(request()->ajax())
+        {    
+        
+        if(!empty($request->periodo) && !empty($request->zona) && !empty($request->estado) && empty($request->orden) && empty($request->ordenf)){
 
+            //$datas=DB::table('ordenesmtl')
+            $datas=Ordenesmtl::orderBy('id')
+            ->where([
+            ['periodo','=',$request->periodo],
+            ['zona','=',$request->zona],
+            ['estado','=',$request->estado],
+            ])
+            //->whereBetween('ordenesmtl_id', [$request->orden, $request->ordenf])    
+            // ->select('id','ordenesmtl_id', 'estado', 'usuario', 'poliza','direccion','recorrido',
+            //     'periodo','zona')
+            ->get();
+        }elseif(!empty($request->periodo) && !empty($request->zona) && !empty($request->estado) && !empty($request->orden) && !empty($request->ordenf)){  
+            
+            // $datas=DB::table('ordenesmtl')
+            $datas=Ordenesmtl::orderBy('id')
+            ->where([
+            ['periodo','=',$request->periodo],
+            ['zona','=',$request->zona],
+            ['estado','=',$request->estado],
+            ])
+            ->whereBetween('ordenesmtl_id', [$request->orden, $request->ordenf])    
+            // ->select('id','ordenesmtl_id', 'estado', 'usuario', 'poliza','direccion','recorrido',
+            //     'periodo','zona')
+            ->get();
+        }else{      
+            //$datas=DB::table('ordenesmtl')
+            $datas=Ordenesmtl::orderBy('id')
+            ->where([
+            ['periodo','=',$request->periodo],
+            ['zona','=',$request->zona],
+            ['estado','=',$request->estado],
+            ])
+            ->whereBetween('fecha_de_ejecucion', [$fechaAi,$fechaAf])
+            // ->select('ordenesmtl_id', 'estado', 'usuario', 'poliza','direccion','recorrido',
+            //     'periodo','zona')
+            ->get();   
 
-        return view('admin.ordenes.index');   
-
-        } 
+            }  
+            
+            return  DataTables::of($datas)
+            ->addColumn('checkbox','<input type="checkbox" name="orden_id[]"  value="{{$id}}" class="orden_id" title="Selecciona Orden"
+            />')
+            ->rawColumns(['checkbox'])
+            ->make(true);
+        }
+      
+        $usuarios=Usuario::orderBy('id')->where('tipodeusuario','movil')->pluck('usuario', 'id');   
+        
+        return view('admin.ordenes.index', compact('usuarios'));   
     }
-   
+  
+    
+
+    
 
     /**
      * Update the specified resource in storage.
@@ -59,18 +87,16 @@ class  OrdenesmtlasignarController extends Controller
     public function actualizar(Request $request)
     {   
 
-        $asignar = $request->asignar;
-        $desasignar  = $request->desasignar;
+    if (request()->ajax()) {
+        // $asignar = $request->asignar;
+        // $desasignar  = $request->desasignar;
         
         
-        if ($asignar == $asignar & $desasignar == null ) {
+        // if ($asignar == $asignar & $desasignar == null ) {
+     
+        $id = $request->input('id');
+        $usuario = $request->input('usuario');
         
-         
-        $id=$request->id;
-        $usuario=$request->usuario;
-
-            
-       
         foreach ($id as $ids ){    
             $estado2 = DB::table('ordenesmtl')
             ->where([['id', $ids],
@@ -94,49 +120,53 @@ class  OrdenesmtlasignarController extends Controller
                      ]);           
                
          }
-       
-         return redirect('admin/asignacion')->with('mensaje', 'Ordenes asignadas correctamente');
-        }else{
-    
-       return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar un usuario y una orden cargada');
-             
-    }  
-    
-       
-        return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden cargada');
+         return response()->json(['mensaje' => 'ok']);
+        } else{
 
-    } else if ($asignar == null & $desasignar == $desasignar) {
+        return response()->json(['mensaje'=>'debe de seleccionar un usuario']);   
+        } 
         
-        $id=$request->id;
-        $usuario=$request->usuario;
-    
-    foreach ($id as $ids ){  
-       $estado1 = DB::table('ordenesmtl')
-           ->where([['id', $ids],
-            ['estado_id', '=', 2]])
-            ->count(); 
-        } 
-            if($estado1>0){
-
-            foreach ($id as $fila ) {
-           
-             DB::table('ordenesmtl')
-            ->where([['id', $fila],
-                     ['estado_id', '=', 2]])
-            ->update(['usuario' => '',
-                     'estado_id' => 1,
-                     'estado' => 'CARGADO'  
-                     ]);           
-               
-        }
-        return redirect('admin/asignacion')->with('mensaje', 'Ordenes desasignadas correctamente');
-
-        } 
-        return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden pendiente');
-
-    }else{return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden');}
-
+    } else {
+        abort(404);
+           }
  }
+ 
+    
+       
+    //     return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden cargada');
+
+    // } else if ($asignar == null & $desasignar == $desasignar) {
+        
+    //     $id=$request->id;
+    //     $usuario=$request->usuario;
+    
+    // foreach ($id as $ids ){  
+    //    $estado1 = DB::table('ordenesmtl')
+    //        ->where([['id', $ids],
+    //         ['estado_id', '=', 2]])
+    //         ->count(); 
+    //     } 
+    //         if($estado1>0){
+
+    //         foreach ($id as $fila ) {
+           
+    //          DB::table('ordenesmtl')
+    //         ->where([['id', $fila],
+    //                  ['estado_id', '=', 2]])
+    //         ->update(['usuario' => '',
+    //                  'estado_id' => 1,
+    //                  'estado' => 'CARGADO'  
+    //                  ]);           
+               
+    //     }
+    //     return redirect('admin/asignacion')->with('mensaje', 'Ordenes desasignadas correctamente');
+
+    //     } 
+    //     return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden pendiente');
+
+    // }else{return redirect('admin/asignacion')->with('mensaje', 'Debe seleccionar una orden');}
+
+
 
 //  public function index1(Request $request)
 //  {   
@@ -204,6 +234,27 @@ class  OrdenesmtlasignarController extends Controller
 
 
 // }
+
+public function medidorall(Request $request)
+    {   
+     
+       $Usuario=$request->usuario;
+       $Estado=$request->estado_id;
+        
+        $medidorapi = DB::table('ordenesmtl')
+        ->where([
+            ['estado_id','=',$Estado],
+            ['usuario','=',$Usuario],
+            ])
+      ->select('id', 'zona', 'poliza', 'direccion', 'recorrido','medidor', 'nombre', 'lote', 'consecutivo', 'ruta', 'tope', 'usuario', 'estado_id')
+      ->get();
+
+        return response()->json($medidorapi);
+        
+    }    
+
+    // Controlador de seguimiento de orden
+
 
 
 

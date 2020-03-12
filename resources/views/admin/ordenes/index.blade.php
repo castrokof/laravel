@@ -12,8 +12,8 @@
 
 
 @section('scripts')
-<script src="{{asset("assets/pages/scripts/admin/ordenes/index.js")}}" type="text/javascript"></script>
-<script src="{{asset("assets/pages/scripts/admin/ordenes/crear.js")}}" type="text/javascript"></script>    
+
+<script src="{{asset("assets/pages/scripts/admin/rol/crear.js")}}" type="text/javascript"></script>    
 @endsection
 
 @section('contenido')
@@ -25,7 +25,7 @@
         <div class="card-header with-border">
           <h3 class="card-title">Asignación</h3>
         </div>  
-          <form action="{{route('asignacion')}}" id="form-general" class="form-horizontal" method="GET">
+          {{-- <form action="{{route('asignacion')}}" id="form-general" class="form-horizontal" method="GET"> --}}
             @csrf
             <div class="card-body">
               
@@ -34,7 +34,7 @@
             </tr>
             </td> 
             </div>
-          </form>
+          {{-- </form> --}}
 
           <form action="{{route('actualizar_asignacion')}}" id="form-general" class="form-horizontal" method="POST">
             @csrf
@@ -63,10 +63,10 @@
 
         <!-- /.card-header -->
 <div class="card-body table-responsive p-0" style="height: 500px;">
-      <table id="asignacion"  class="table table-head-fixed text-nowrap table-hover table-bordered">
+      <table id="asignacion"  class="table text-nowrap table-hover table-bordered">
         <thead>
         <tr> 
-              <th class="width40"><input type="checkbox" class="select-all" /> Select / Deselect All</th>              
+              <th class="width40"><input name="id" id="id" type="checkbox" class="select-all" /> Select / Deselect All</th>
               <th>Orden</th>
               <th>Estado</th>
               <th>Usuario</th>
@@ -77,7 +77,7 @@
               <th>Zona</th>
         </tr>
         </thead>
-        <tbody>
+        {{-- <tbody>
             @foreach ($datas as $data)
             <tr>
                 <td><div class="checkbox">
@@ -96,7 +96,7 @@
                
             </tr>
         @endforeach          
-        </tbody>
+        </tbody> --}}
       </table>
          
     </div>
@@ -111,21 +111,162 @@
 <script src="{{asset("assets/$theme/plugins/datatables-bs4/js/dataTables.bootstrap4.js")}}" type="text/javascript"></script>
 
 <script>
-  jQuery(function($) {
-          //initiate dataTables plugin
+ jQuery(document).ready(function() {
+
+fill_datatable();
+ 
+ function fill_datatable(periodo = '', zona = '', estado = '', orden = '', ordenf = '')
+{
+ var datatable = $('#asignacion').DataTable({
+     processing: true,
+     serverSide: true,
+     ajax:{
+       url:"{{ route('asignacion')}}",
+       data:{periodo:periodo, zona:zona, estado:estado, orden:orden, ordenf:ordenf}
+     },
+     columns: [
+       {
+           data:'checkbox', orderable: false, searchable: false
+           
+       },
+     
+       {
+           data:'ordenesmtl_id'
+           
+       },
+       {
+           data:'estado'
+           
+       },
+       {
+           data:'usuario'
+       },
+       {
+           data:'poliza'
+       },
+       {
+           data:'direccion'
+       },
+       {
+           data:'recorrido'
+       },
+       {
+           data:'periodo'
+       },
+       {
+           data:'zona'
+       }
+
+     ]
+   });
+}    
+
+$('#buscar').click(function(){
+
+var periodo = $('#periodo').val();
+var zona = $('#zona').val();
+var estado = $('#estado').val();
+var orden = $('#orden').val();
+var ordenf = $('#ordenf').val();
+
+if((periodo != '' && zona != '' && estado != '') || (orden != '' && ordenf != '')){
+
+   $('#asignacion').DataTable().destroy();
+   fill_datatable(periodo, zona, estado, orden, ordenf);
+
+}else{
+
+  swal({
+            title: 'Debes digitar el periodo, zona y estado',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+                
+                    }
+              })
+}
+});        
+
+$('#reset').click(function(){
+$('#zona').val('');
+$('#periodo').val('');
+$('#estado').val('');
+$('#orden').val('');
+$('#ordenf').val('');
+$('#asignacion').DataTable().destroy();
+fill_datatable();
+});
+
+
+
+$(document).on('click', '#asignar', function(){
+     
   
-          var myTable = 
-          $('#asignacio')
-          //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-          .DataTable(
+     var usuario = $('#usuario').val();
+     var id = [];
+     if(usuario == ''){
+
+            swal({
+            title: 'Debe seleccionar un usuario',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+                
+                    }
+              }) 
+      
+   
+     }else{
+     
+     if(confirm("Quieres asignar estas ordenes??"))
+      {
+       $('.orden_id:checked').each(function() {
+        id.push($(this).val());
+        
+           });
+        
+       if(id.length > 0)
+        {    
+          $.ajax({
+                url:"{{ route('actualizar_asignacion')}}",
+                method:'post',
+                data:{id:id, usuario:usuario,
+                
+                  "_token": $("meta[name='csrf-token']").attr("content")
+                
+                },
+                success:function(respuesta)
+                {  
+                  if(respuesta.mensaje = 'ok') {
+                  $('#asignacion').DataTable().ajax.reload();
+                  Manteliviano.notificaciones('Ordenes asignadas correctamente', 'Sistema Manteliviano', 'success');
+                  }else{
+                    Manteliviano.notificaciones('Las oredenes no se asignaron', 'Sistema Manteliviano', 'error');
+                }
+                } 
+                 });
+
+          }
+          else
+          {
+
+      swal({
+            title: 'Por favor seleccione una orden del checkbox',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+                
+                    }
+              })
+            }
+         }
+       }     
+    });   
   
-            
-  
-          );
-  
-         });
-  </script>
-  
+  });
+</script>
+
+
 
 
 @endsection

@@ -43,6 +43,7 @@
         <tr> 
               <th>Zona</th>              
               <th>Periodo</th>
+              <th>Nombre</th>
               <th>Usuario</th>
               <th>Lote</th>
               <th>Asignados</th>
@@ -167,7 +168,16 @@
 
         }else{
         
-             alert('Debes digitar el periodo y zona')
+          swal({
+            title: 'Debes digitar el periodo y zona',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+                
+                    }
+              })
+
+             //alert('Debes digitar el periodo y zona')
         }
     });        
 

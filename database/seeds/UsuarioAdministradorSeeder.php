@@ -20,6 +20,7 @@ class UsuarioAdministradorSeeder extends Seeder
             'email'=>'castrokof@gmail.com',
             'empresa'=>'sinteco',  
             'password'=>bcrypt('123456'),
+            'estado'=>'activo', 
             
 
         ]);
@@ -32,6 +33,7 @@ class UsuarioAdministradorSeeder extends Seeder
             'email'=>'pruebas@gmail.com',
             'empresa'=>'sinteco',  
             'password'=>bcrypt('123456'),
+            'estado'=>'activo',
             
 
         ]);

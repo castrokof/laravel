@@ -11,8 +11,8 @@
     <div class="col-md-6">    
         <label>&nbsp;</label>
         <div class="form-group">
-        <button value ="asignar" id="asignar" name="asignar" type="submit" class="btn btn-success btn-xm col-xs-2">Asignar</button>
-        <button value ="desasignar" id= "desasignar" name="desasignar" type="submit" class="btn btn-danger btn-xm col-xs-2">Desasignar</button>
+        <button value ="asignar" id="asignar" name="asignar" type="button" class="btn btn-success btn-xm col-xs-2">Asignar</button>
+        <button value ="desasignar" id= "desasignar" name="desasignar" type="button" class="btn btn-danger btn-xm col-xs-2">Desasignar</button>
         </div>    
     </div>
 
