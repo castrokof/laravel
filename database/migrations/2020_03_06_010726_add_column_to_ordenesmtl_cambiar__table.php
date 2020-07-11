@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarcasTable extends Migration
+class AddColumnToOrdenesmtlCambiarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateMarcasTable extends Migration
      */
     public function up()
     {
-        Schema::create('marcas', function (Blueprint $table) {
-            $table->Increments('id');
-            $table->integer('marca_id');
-            $table->string('codigo',50);
-            $table->string('descripcion',100);
-            $table->timestamps();
+        Schema::table('ordenesmtl', function (Blueprint $table) {
+            $table->string('lectura',11)->nullable()->change();
+            $table->string('nombreu',100)->nullable()->after('usuario');
         });
     }
 
@@ -29,6 +26,8 @@ class CreateMarcasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marcas');
+        Schema::table('ordenesmtl', function (Blueprint $table) {
+            //
+        });
     }
 }

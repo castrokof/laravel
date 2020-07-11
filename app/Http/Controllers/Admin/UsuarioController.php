@@ -18,7 +18,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {   $Rols1 = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
-        $datas = Usuario::orderBy('id')->get();
+        $datas = Usuario::with('roles1:id,nombre')->orderBy('id')->get();
         return view('admin.usuario.index', compact('datas','Rols1'));
     }
 
@@ -64,7 +64,11 @@ class UsuarioController extends Controller
         $data = Usuario::with('roles1')->findOrFail($id);
         return view('admin.usuario.editar', compact('data','Rols1'));
     }
-
+    
+    public function editarpassword($id)
+    {   $data = Usuario::with('roles1')->findOrFail($id);
+        return view('admin.usuario.editarpassword', compact('data'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -74,8 +78,17 @@ class UsuarioController extends Controller
      */
     public function actualizar(ValidacionUsuario $request, $id)
     {
-        Usuario::findOrFail($id)->update($request->all());
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->all());
+        $usuario->roles1()->sync($request->rol_id);
         return redirect('admin/usuario')->with('mensaje', 'Usuario actualizado con exito!!');
+    }
+
+    public function actualizarpassword(Request $request, $id)
+    {
+       Usuario::findOrFail($id)->update($request->all());
+            
+        return redirect('admin/usuario')->with('mensaje', 'Password actualizado con exito!!');
     }
 
     /**

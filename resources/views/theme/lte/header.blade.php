@@ -32,11 +32,11 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset("assets/$theme/dist/img/user1-128x128.jpg")}}") alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="{{asset("assets/$theme/dist/img/user_default.jpg")}}") alt="User Avatar" class="img-size-50 mr-2 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                       <span class="float-right text-sm text-danger"><i></i></span>
-                      Hola, {{Session()->get('nombre_usuario') ?? ''}}
+                      Hola, {{Session()->get('usuario') ?? ''}}
                     </h3>
                     <i><a href="{{route('logout')}}" class="btn btn-block bg-gradient-warning btn-xs btn-flat">Logout</a></i>
                     <i><a href="{{route('login')}}" class="btn btn-block bg-gradient-info btn-xs btn-flat">Login</a> </i>                               

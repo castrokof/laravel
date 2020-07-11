@@ -21,7 +21,7 @@ class CreateOrdenEjecutadaTable extends Migration
             $table->string('usuario',50);
             $table->dateTime('fecha_de_ejecucion');
             $table->string('new_medidor',50)->nullable();
-            $table->integer('lectura')->nullable();
+            $table->string('lectura',11)->nullable();
             $table->string('oposicion',50)->nullable();
             $table->string('sin_caja',50)->nullable();
             $table->string('sin_tapa',50)->nullable();

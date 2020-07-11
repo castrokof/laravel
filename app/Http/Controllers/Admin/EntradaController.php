@@ -12,66 +12,39 @@ use App\Http\Requests\ValidacionArchivo;
 
 class EntradaController extends Controller
  {
-      
+  
+ public $rows=0;
   
     public function guardar(ValidacionArchivo $request)
     {     
         $file = $request->file('file'); 
+        
         if($file == null){
 
             return redirect('admin/archivo')->with('mensaje', 'No seleccionaste ningun archivo');
 
         
         }else{
-            $this->importaExcel($request);
+            
+        $this->importaExcel($request);
+         
+            
+            $row = $this->$rows;
+           
 
+            if($row==1){
+           
+            return redirect('admin/archivo')->with('mensaje', 'Registros duplicados en base de datos');
+                
+            }else{
+            
             return redirect('admin/archivo')->with('mensaje', 'Archivo cargado exitosamente');
+            }
 
         }
    
     }
-// Pendiente de implementar  
-    public function duplicadosExcel(request $request){
-    
-        $file = $request->file('file');             
 
-
-        $name=time().$file->getClientOriginalName();  
-                         
-       
-        $destinationPath = public_path('xlsxin/');
-       
-        $file->move($destinationPath, $name);
-       
-        $path=$destinationPath.$name;
-    
-    
-    
-    
-        Excel::load($path, function($reader) { 
-
-        foreach ($reader->get() as $fila1=>$filaentrada2) 
-         {     
-                 $rows1 = DB::table('entrada')
-                 ->where([
-                    ['periodo', '=', $filaentrada2[6].$filaentrada2[7]],
-                    ['zona', '=', $filaentrada2[0]],
-                    ['poliza', '=', $filaentrada2[1]],])
-                    ->count();    
-                    
-                
-                if($rows1>0){
-                
-                
-                    return redirect('admin/archivo')->with('mensaje', 'Registros duplicados en base de datos');      
-                
-                
-                }
-            }
-        });  
-    }
-  
-    
   
     public function importaExcel(request $request)
 
@@ -90,10 +63,9 @@ class EntradaController extends Controller
  $file->move($destinationPath, $name);
 
  $path=$destinationPath.$name;
-
-
- //dd($rows);
-
+ 
+ 
+ 
  $archivo = new Archivo;
 
              $archivo->nombre=$name;
@@ -106,12 +78,24 @@ class EntradaController extends Controller
              $archivo->cantidad=0;
 
              $archivo->save();
-   
+ 
+ 
 
+ Excel::load($path, function($reader) { 
 
-Excel::load($path, function($reader) {      
+        foreach ($reader->get() as $fila1=>$filaentrada2) 
+         {     
+                 $rows1 = DB::table('entrada')
+                    ->where([
+                    ['periodo', '=', $filaentrada2[6].$filaentrada2[7]],
+                    ['zona', '=', $filaentrada2[0]],
+                    ['poliza', '=', $filaentrada2[1]],])
+                    ->count();    
+         }
+                
 
-                 
+if($rows1==0){
+ 
                     $count=0; 
                     $consecutivo=1;
                        
@@ -128,7 +112,7 @@ Excel::load($path, function($reader) {
                                        $filaentrada->poliza=$filaentrada1[1]; 
                                        $filaentrada->direccion=$filaentrada1[2];
                                        $filaentrada->recorrido=$filaentrada1[3]; 
-                                       $filaentrada->medidor=$filaentrada1[4];
+                                  trim($filaentrada->medidor=$filaentrada1[4]);
                                        $filaentrada->nombre=$filaentrada1[5]; 
                                        $filaentrada->year=$filaentrada1[6];
                                        $filaentrada->mes=$filaentrada1[7];
@@ -184,17 +168,22 @@ Excel::load($path, function($reader) {
                    
                           ]);
                    
-                       }}
-                   
-                   
-                   
+                                              }
+                           
+                                            }
+                  
+                  
+                }else{
+                           
+                        $this->$rows = 1; 
+                     }  
                    
              });
 
         }         
-  }        
+   }        
     
-               
+              
 
 
 

@@ -14,7 +14,7 @@ class CreateOrdenesmtlTable extends Migration
     public function up()
     {
         Schema::create('ordenesmtl', function (Blueprint $table) {
-            $table->unsignedBigIncrements('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('ordenesmtl_id');
             $table->foreign('ordenesmtl_id', 'fk_ordenesmtl_entrada')->references('id')->on('entrada')->onDelete('restrict')->onUpdate('restrict');
             $table->string('zona',45);
@@ -34,7 +34,7 @@ class CreateOrdenesmtlTable extends Migration
             $table->string('usuario',50)->nullable();
             $table->dateTime('fecha_de_ejecucion')->nullable();
             $table->string('new_medidor',50)->nullable();
-            $table->integer('lectura')->nullable();
+            $table->string('lectura',11)->nullable();
             $table->string('oposicion',50)->nullable();
             $table->string('sin_caja',50)->nullable();
             $table->string('sin_tapa',50)->nullable();

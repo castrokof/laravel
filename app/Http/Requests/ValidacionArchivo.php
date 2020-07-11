@@ -25,6 +25,21 @@ class ValidacionArchivo extends FormRequest
     {
         return [
             'file' => 'mimes:xls,xlsx'
-        ];
-    }
+            /*'zona' => 'required',
+            'poliza' => 'required',
+            'direccion' => 'required',
+            'recorrido' => 'required',
+            'medidor' => 'required',
+            'nombre' => 'required',
+            'year' => 'required',
+            'mes' => 'required',
+            'lote' => 'required',
+            'periodo' => 'required',
+            'consecutivo' => 'required',
+            'consecutivo_int' => 'required',
+            'ruta' => 'required',
+            'tope' => 'required'*/
+            ];
+            
+ }
 }

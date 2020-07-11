@@ -20,6 +20,8 @@ class UsuarioAdministradorSeeder extends Seeder
             'email'=>'castrokof@gmail.com',
             'empresa'=>'sinteco',  
             'password'=>bcrypt('123456'),
+            'remenber_token'=>bcrypt('123456'),
+            'estado'=>'activo', 
             
 
         ]);
@@ -32,6 +34,8 @@ class UsuarioAdministradorSeeder extends Seeder
             'email'=>'pruebas@gmail.com',
             'empresa'=>'sinteco',  
             'password'=>bcrypt('123456'),
+            'remenber_token'=>bcrypt('123456'),
+            'estado'=>'activo',
             
 
         ]);
@@ -39,7 +43,7 @@ class UsuarioAdministradorSeeder extends Seeder
 
             'rol_id'=>1, 
             'usuario_id'=>1, 
-            'estado'=>1, 
+             
                       
 
         ]);
@@ -47,7 +51,7 @@ class UsuarioAdministradorSeeder extends Seeder
 
             'rol_id'=>2, 
             'usuario_id'=>2, 
-            'estado'=>1, 
+             
                       
 
         ]);

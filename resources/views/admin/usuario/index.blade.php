@@ -31,6 +31,8 @@
       <table id="usuarios" class="table table-hover table-bordered text-nowrap">
         <thead>
         <tr>
+               <th class="btn-accion-tabla tooltipsC" title="Editar este registro"><i class="fa fa-fw fa-pencil-alt"></i></th>
+              <th class="btn-accion-tabla tooltipsC" title="Editar password"><i class="fas fa-key"></i></th>    
               <th>Id</th>
               <th>Usuario</th>
               <th>Nombre</th>
@@ -39,12 +41,23 @@
               <th>Empresa</th>
               <th>Password</th>
               <th>Estado</th>
-              <th class="width80">Acciones</th>
+              <th>Rol</th>
+             
         </tr>
         </thead>
         <tbody>
             @foreach ($datas as $data1)
             <tr>
+                 <td>
+                <a href="{{url("admin/usuario/$data1->id/editar")}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                  <i class="fa fa-fw fa-pencil-alt"></i>
+                </a>
+                </td>
+                <td>
+                <a href="{{url("admin/usuario/$data1->id/password")}}" class="btn-accion-tabla tooltipsC" title="Editar password">
+                  <i class="fas fa-key"></i>
+                </a>
+                </td>
                 <td>{{$data1->id}}</td>
                 <td>{{$data1->usuario}}</td>
                 <td>{{$data1->nombre}}</td>
@@ -54,9 +67,12 @@
                 <td>{{$data1->password}}</td>
                 <td>{{$data1->estado}}</td>
                 <td>
-                <a href="{{url("admin/usuario/$data1->id/editar")}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
-                  <i class="fa fa-fw fa-pencil-alt"></i>
-                </a>
+                    @foreach($data1->roles1 as $rol)
+                    
+                    {{$rol->nombre}}    
+                        
+                    @endforeach
+                    
                 </td>
             </tr>
         @endforeach          
@@ -122,13 +138,46 @@
         var myTable = 
         $('#usuarios')
         //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-        .DataTable(
-
-          
-
-        );
+        .DataTable({
+        language: idioma_espanol,
+        processing: true,
+        
+    
+        });
 
        });
+       
+
+   var idioma_espanol =
+                 {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+                }   
+       
   </script>
    
 

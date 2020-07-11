@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 return $request->user();
 });
 
-//Route::get('medidores','MedidorController@medidorall');
-//Route::post('medidores','MedidorController@medidorejecutado');
+Route::post('medidoresout','Admin\OrdenesmtlasignarController@medidorall');
+Route::post('medidoresin','Admin\OrdenEjecutadaController@medidorejecutado');
+Route::post('marcas','Admin\MarcasController@marcasall');
 Route::post('loginMovil','Seguridad\LoginController@loginMovil');

@@ -27,11 +27,11 @@
     </div>
     <div class="col-lg-3">
     <label for="password" class="col-xs-4 control-label requerido">Password</label>
-    <input type="password" name="password" id="password" class="form-control" value="{{old('password', $data->password ?? '')}}" required >
+    <input type="password" name="password" id="password" class="form-control" value="{{old('password', $data->password ?? '')}}" minlength="6" required >
     </div>
     <div class="col-lg-3">
-        <label for="re_password" class="col-xs-4 control-label requerido">repita el password</label>
-        <input type="password" name="re_password" id="re_password" class="form-control" value="{{old('re_password', $data->re_password ?? '')}}" required >
+        <label for="remenber_token" class="col-xs-4 control-label requerido">repita el password</label>
+        <input type="password" name="remenber_token" id="remenber_token" class="form-control" value="{{old('remenber_token', $data->remenber_token ?? '')}}"  minlength="6" required >
     </div>
     <div class="col-lg-3">
         <label for="estado" class="col-xs-4 control-label requerido">Estado</label>
@@ -42,7 +42,7 @@
                     </select>
         </div>
     <div class="col-lg-3">
-        <label for="rol_id" class="col-xs-4 control-label requerido">Estado</label>
+        <label for="rol_id" class="col-xs-4 control-label requerido">Rol</label>
                         <select name="rol_id" id="rol_id" class="form-control select2bs4" style="width: 100%;">
                         <option value="">---seleccione el rol---</option>
                         @foreach ($Rols1 as $id => $nombre)

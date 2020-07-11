@@ -11,7 +11,12 @@
 
 
 @section('scripts')
-
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 @endsection
 
 @section('contenido')
@@ -37,12 +42,13 @@
   
 
         <!-- /.card-header -->
-<div class="card-body table-responsive p-0" style="height: 500px;">
+<div class="card-body table-responsive p-0" style="height:;">
       <table id="tablero"  class="table table-head-fixed text-nowrap table-hover table-bordered">
         <thead>
         <tr> 
               <th>Zona</th>              
               <th>Periodo</th>
+              <th>Nombre</th>
               <th>Usuario</th>
               <th>Lote</th>
               <th>Asignados</th>
@@ -55,25 +61,20 @@
               <th>Fecha Final</th>
         </tr>
         </thead>
-        {{-- <tbody>
-            @foreach ($datas as $data)
+     
+        <tfoot>
             <tr>
-                <td>{{$data->zona}}</td>
-                <td>{{$data->periodo}}</td>
-                <td>{{$data->usuario}}</td>
-                <td>{{$data->lote}}</td>
-                <td>{{$data->Asignados}}</td>
-                <td>{{$data->Pendientes}}</td>
-                <td>{{$data->Ejecutadas}}</td>
-                <td>{{$data->oposicion}}</td>
-                <td>{{$data->MTL}}</td>
-                <td>{{$data->MTL_TIPO_C}}</td>
-                <td>{{$data->inicio}}</td>
-                <td>{{$data->Final}}</td>
-               
+              <th colspan="5" style="text-align:left">Totales:</th>              
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
-        @endforeach          
-        </tbody> --}}
+        </tfoot>    
       </table>
          
     </div>
@@ -95,9 +96,13 @@
           function fill_datatable(periodo1 = '', zona1 = '' )
          {
           var datatable = $('#tablero').DataTable({
+              language: idioma_espanol,
+              lengthMenu: [ -1],
               processing: true,
               serverSide: true,
-              ajax:{
+              
+                  
+          ajax:{
                 url:"{{ route('tablero')}}",
                 data:{periodo1:periodo1, zona1:zona1}
               },
@@ -111,8 +116,12 @@
                     name:'periodo'
                 },
                 {
-                    data:'usuario',
-                    name:'usuario'
+                  data:'nombreu'
+                 
+                },
+                {
+                  data:'usuario'
+                 
                 },
                 {
                     data:'lote',
@@ -151,9 +160,122 @@
                     name:'Final'
                 }
 
-              ]
-            });
-     }    
+              ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+  
+            
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+  
+            
+           asignadas = api
+                .column( 5, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            pendientes = api
+                .column( 6, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            ejecutadas = api
+                .column( 7, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            oposicion = api
+                .column( 8, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            mtl = api
+                .column( 9, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            mtlc = api
+                .column( 10, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );    
+            
+  
+            
+            $( api.column( 5 ).footer() ).html(
+                asignadas 
+            );
+            $( api.column( 6 ).footer() ).html(
+                pendientes 
+            );
+            $( api.column( 7 ).footer() ).html(
+                ejecutadas 
+            );
+            $( api.column( 8 ).footer() ).html(
+                oposicion 
+            );
+            $( api.column( 9 ).footer() ).html(
+                mtl 
+            );
+            $( api.column( 10 ).footer() ).html(
+                mtlc
+            );
+        },
+              //Botones----------------------------------------------------------------------
+        "dom":'Bfrtip',
+               buttons: [
+                   {
+
+               extend:'copyHtml5',
+               titleAttr: 'Copy',
+               className: "btn btn-info"
+
+
+                  },
+                  {
+
+               extend:'excelHtml5',
+               titleAttr: 'Excel',
+               className: "btn btn-success"
+
+
+                  },
+                   {
+
+               extend:'csvHtml5',
+               titleAttr: 'csv',
+               className: "btn btn-warning"
+
+
+                  },
+                  {
+
+               extend:'pdfHtml5',
+               titleAttr: 'pdf',
+               className: "btn btn-primary"
+
+
+                  }
+               ]
+             });
+}    
+
+    
         
       $('#buscar').click(function(){
 
@@ -167,8 +289,16 @@
 
         }else{
         
-             alert('Debes digitar el periodo y zona')
+             swal({
+            title: 'Debes digitar periodo y zona',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+                
+                    }
+              })
         }
+        
     });        
 
       $('#reset').click(function(){
@@ -178,6 +308,40 @@
         fill_datatable();
       });
 });
+
+ 
+
+   var idioma_espanol =
+                 {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+                } ;
+                
+           
   
          
   </script>

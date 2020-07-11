@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
-    protected $remember_token = false;
+    //protected $remember_token = false;
     //protected $guarded = ['id'];
     protected $fillable = [
         
@@ -41,7 +41,8 @@ class Usuario extends Authenticatable
                     'rol_nombre' => $roles1[0]['nombre'],
                     'usuario' => $this->usuario,
                     'usuario_id' => $this->id,
-                    'nombre_usuario' => $this->nombre
+                    'nombre_usuario' => $this->nombre,
+                    'estado'=>$this->estado
                 ]
                 );
         }
@@ -52,6 +53,7 @@ class Usuario extends Authenticatable
         if ( !empty ($value))
         {
             $this->attributes['password'] = Hash::make($value);
+            $this->attributes['remenber_token'] = Hash::make($value);
         }
     }
 

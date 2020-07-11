@@ -31,39 +31,35 @@ class AdminController extends Controller
             if (!empty($request->periodo1) & !empty($request->zona1)) {
                
                 $data = DB::table('ordenesmtl')
-               ->select('zona','periodo','usuario', 'lote',
+               ->select('zona','periodo','usuario','nombreu', 'lote',
                 DB::raw('SUM(CASE WHEN estado_id > 0 THEN 1 ELSE 0 END) AS Asignados'),
                 DB::raw('SUM(CASE WHEN estado_id = 2 THEN 1 ELSE 0 END) AS Pendientes'),
                 DB::raw('SUM(CASE WHEN estado_id = 4 THEN 1 ELSE 0 END) AS Ejecutadas'),
                 DB::raw('SUM(CASE WHEN oposicion = "SI" THEN 1 ELSE 0 END) AS oposicion'),
                 DB::raw('SUM(CASE WHEN mtl = "MTL" THEN 1 ELSE 0 END) AS MTL'),
-                DB::raw('SUM(CASE WHEN mtl = "MTLC" THEN 1 ELSE 0 END) AS MTL_TIPO_C'),
-                'fecha_de_ejecucion as inicio', 'fecha_de_ejecucion as Final')
+                DB::raw('SUM(CASE WHEN mtl = "MTL Tipo C" THEN 1 ELSE 0 END) AS MTL_TIPO_C'),
+                DB::raw('MIN(fecha_de_ejecucion) as inicio'), DB::raw('MAX(fecha_de_ejecucion) as Final'))
                 ->where([
                     ['periodo', $request->periodo1],
                     ['zona', $request->zona1],
                     ['estado', '!=', 'CARGADO'],
                     ])
-                ->orderBy('inicio', 'asc')
-                ->orderBy('Final', 'desc')
-                ->groupBy('zona', 'periodo', 'usuario', 'lote', 'fecha_de_ejecucion')
+                ->groupBy('zona', 'periodo', 'usuario','nombreu','lote')
                 ->get();
                 
             }else{
 
                 $data = DB::table('ordenesmtl')
-                ->select('zona','periodo','usuario', 'lote',
+                ->select('zona','periodo','usuario', 'nombreu', 'lote',
                 DB::raw('SUM(CASE WHEN estado_id > 0 THEN 1 ELSE 0 END) AS Asignados'),
                 DB::raw('SUM(CASE WHEN estado_id = 2 THEN 1 ELSE 0 END) AS Pendientes'),
                 DB::raw('SUM(CASE WHEN estado_id = 4 THEN 1 ELSE 0 END) AS Ejecutadas'),
                 DB::raw('SUM(CASE WHEN oposicion = "SI" THEN 1 ELSE 0 END) AS oposicion'),
                 DB::raw('SUM(CASE WHEN mtl = "MTL" THEN 1 ELSE 0 END) AS MTL'),
-                DB::raw('SUM(CASE WHEN mtl = "MTLC" THEN 1 ELSE 0 END) AS MTL_TIPO_C'),
-                'fecha_de_ejecucion as inicio', 'fecha_de_ejecucion as Final')
+                DB::raw('SUM(CASE WHEN mtl = "MTL Tipo C" THEN 1 ELSE 0 END) AS MTL_TIPO_C'),
+                DB::raw('MIN(fecha_de_ejecucion) as inicio'), DB::raw('MAX(fecha_de_ejecucion) as Final'))
                 ->whereBetween('fecha_de_ejecucion', [$fechaAi,$fechaAf])
-                ->orderBy('inicio', 'asc')
-                ->orderBy('Final', 'desc')
-                ->groupBy('zona', 'periodo', 'usuario', 'lote', 'fecha_de_ejecucion')
+                ->groupBy('zona', 'periodo', 'usuario', 'nombreu', 'lote')
                 ->get();
 
             }

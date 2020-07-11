@@ -22,14 +22,17 @@
 <div class="login-box">
   <div class="login-logo">
     <div class="row">
-        <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-50 mr-3 img-circle" >
+        
         
       </div>          
-    <a href="{{route('inicio')}}"><b>Manteliviano</b>Sinteco</a>
+    <a href="{{route('inicio')}}"></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+        <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-500 mr-12 " >
+       <p class="login-box-msg"> <b>Manteliviano</b></p>
+       <div class="card"></div><hr />
       <p class="login-box-msg">Inicie Sesion</p>
       @if ($errors->any())
       <div class="alert alert-danger alert-dismissible">

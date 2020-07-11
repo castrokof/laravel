@@ -18,7 +18,7 @@ class InicioController extends Controller
     public function index()
     {
             //dd(Session()->get('usuario'));
-            return view('inicio');
+            return view('seguridad.index');
     }
 
    

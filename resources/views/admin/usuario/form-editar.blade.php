@@ -1,7 +1,7 @@
 <div class="form-group row">
     <div class="col-lg-3">
         <label for="usuario" class="col-xs-4 control-label requerido">Usuario</label>
-        <input type="text" name="usuario" id="usuario" class="form-control" value="{{old('usuario', $data->usuario ?? '')}}" required >
+        <input disabled  type="text" name="usuario" id="usuario" class="form-control" value="{{old('usuario', $data->usuario ?? '')}}" required >
     </div>
     <div class="col-lg-3">
     <label for="nombre" class="col-xs-4 control-label requerido">Nombre</label>
@@ -25,14 +25,7 @@
         <label for="empresa" class="col-xs-4 control-label requerido">Empresa</label>
         <input type="text" name="empresa" id="empresa" class="form-control" value="{{old('empresa', $data->empresa ?? '')}}" required >
     </div>
-    <div class="col-lg-3">
-    <label for="password" class="col-xs-4 control-label requerido">Password</label>
-    <input type="password" name="password" id="password" class="form-control" value="{{old('password', $data->password ?? '')}}" required >
-    </div>
-    <div class="col-lg-3">
-        <label for="re_password" class="col-xs-4 control-label requerido">repita el password</label>
-        <input type="password" name="re_password" id="re_password" class="form-control" value="{{old('password', $data->password ?? '')}}" required >
-    </div>
+    
     <div class="col-lg-3">
         <label for="estado" class="col-xs-4 control-label requerido">Estado</label>
                     <select name="estado" id="estado" class="form-control select2bs4" style="width: 100%;">
@@ -42,7 +35,7 @@
                     </select>
         </div>
     <div class="col-lg-3">
-        <label for="rol_id" class="col-xs-4 control-label requerido">Estado</label>
+        <label for="rol_id" class="col-xs-4 control-label requerido">Rol</label>
                         <select name="rol_id" id="rol_id" class="form-control select2bs4" style="width: 100%;">
                         <option value="">---seleccione el rol---</option>
                         @foreach ($Rols1 as $id => $nombre)
